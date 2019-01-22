@@ -16,6 +16,15 @@ class SearchView(student: Student) {
     val gpa: Double = (student.studentClasses.foldRight(0.0  ){grade,acc -> acc + grade.grade!!.toDouble()} ) /student.studentClasses.size
 }
 
+class DetailsView( student: Student)  {
+    var email = student.email
+    val last = student.last
+    val first = student.first
+    val studentClasses = student.studentClasses
+    // TODO error handling on grade
+    val gpa: Double = (student.studentClasses.foldRight(0.0  ){grade,acc -> acc + grade.grade!!.toDouble()} ) /student.studentClasses.size
+}
+
 data class Grade(var id: String?, var grade: String?) {
     constructor(): this( null, null)
 }

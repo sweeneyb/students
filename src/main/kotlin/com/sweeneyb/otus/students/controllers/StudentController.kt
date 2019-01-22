@@ -1,6 +1,8 @@
 package com.sweeneyb.otus.students.controllers
 
+import com.sun.security.ntlm.Server
 import com.sweeneyb.otus.students.model.Class
+import com.sweeneyb.otus.students.model.DetailsView
 import com.sweeneyb.otus.students.model.SearchView
 import com.sweeneyb.otus.students.model.Student
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +24,7 @@ import reactor.core.publisher.FluxSink
 import reactor.core.publisher.Mono
 import java.util.*
 import java.util.function.Predicate
+import javax.xml.soap.Detail
 import kotlin.properties.Delegates
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.KProperty
@@ -48,18 +51,20 @@ open class StudentController {
             (GET("/student/last/{name}")) { request ->
                 println(request.pathVariable("name"))
                 val filtered = students.filter { request.pathVariable("name").equals(it.last) }
-
                 ok().body(fromObject(filtered))
-
             }
-            (GET("/student/search")) { request ->
-                val firstFilter = getFilterForParam(request, "first", Student::first)
-                val lastFilter = getFilterForParam(request, "last", Student::last)
-                println(request.queryParam("first"))
-                val filtered = students.filter(firstFilter).filter(lastFilter)
-                val transformed = filtered.map { SearchView(it) }
-                ok().body(fromObject(transformed))
-            }
+            GET("/student/search", handleSearch(students) { SearchView(it)})
+            GET("/student/details", handleSearch(students ) {DetailsView(it)} )
+        }
+    }
+    fun handleSearch(students:List<Student>, xform: (Student) -> Any): (ServerRequest)->Mono<ServerResponse> {
+        return {request:ServerRequest ->
+            val firstFilter = getFilterForParam(request, "first", Student::first)
+            val lastFilter = getFilterForParam(request, "last", Student::last)
+            println(request.queryParam("first"))
+            val filtered = students.filter(firstFilter).filter(lastFilter)
+            val transformed = filtered.map { xform(it) }
+            ServerResponse.ok().body(fromObject(transformed))
         }
     }
 
