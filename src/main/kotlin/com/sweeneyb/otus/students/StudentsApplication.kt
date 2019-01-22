@@ -26,14 +26,12 @@ import java.time.Duration
 @Component
 @ComponentScan
 @EnableAutoConfiguration
-class StudentsApplication {
+open class StudentsApplication {
 
-companion object {
 
-}
 	@Bean
 	@Qualifier("webHandler")
-	fun getServer(context: ApplicationContext): HttpServer {
+	open fun getServer(context: ApplicationContext): HttpServer {
 		val handler = WebHttpHandlerBuilder.applicationContext(context).build()
 		val adapter = ReactorHttpHandlerAdapter(handler)
 		val server = HttpServer.create().host("0.0.0.0").port(8080)

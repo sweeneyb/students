@@ -1,6 +1,7 @@
 package com.sweeneyb.otus.students.controllers
 
 import com.sweeneyb.otus.students.model.Class
+import com.sweeneyb.otus.students.model.SearchView
 import com.sweeneyb.otus.students.model.Student
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -29,10 +30,10 @@ import kotlin.reflect.KProperty
 @EnableWebFlux
 @Component
 @Configuration
-class StudentController {
+open class StudentController {
 
     @Bean
-    fun routeFun(@Autowired courses: Map<String, String>, @Autowired students: List<Student>): RouterFunction<ServerResponse> {
+    open fun routeFun(@Autowired courses: Map<String, String>, @Autowired students: List<Student>): RouterFunction<ServerResponse> {
         return router {
             (GET("/foo/{id}") and accept(MediaType.APPLICATION_JSON)) { request -> ok().body(fromObject(Student(request.pathVariable("id")))) }
             (GET("/foo/{id}") and accept(MediaType.APPLICATION_XML)) { request -> ok().contentType(MediaType.APPLICATION_XML).body(fromObject(Student(request.pathVariable("id")))) }
@@ -56,7 +57,8 @@ class StudentController {
                 val lastFilter = getFilterForParam(request, "last", Student::last)
                 println(request.queryParam("first"))
                 val filtered = students.filter(firstFilter).filter(lastFilter)
-                ok().body(fromObject(filtered))
+                val transformed = filtered.map { SearchView(it) }
+                ok().body(fromObject(transformed))
             }
         }
     }
@@ -75,7 +77,7 @@ class StudentController {
     }
 
     @GetMapping("/api/student/{id}")
-    fun handleDetails(@PathVariable id: String): Mono<Student> {
+    open fun handleDetails(@PathVariable id: String): Mono<Student> {
         val sanitizedId = sanitize(id)
         return Mono.just(Student(sanitizedId))
     }
