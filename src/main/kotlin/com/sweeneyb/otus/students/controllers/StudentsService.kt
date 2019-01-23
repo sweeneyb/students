@@ -6,9 +6,11 @@ import com.sweeneyb.otus.students.model.Student
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import java.util.*
 
 @Service
 class StudentsService {
+    constructor()
 
     lateinit var students: List<Student>
     lateinit var courses: Map<String, String>
@@ -24,6 +26,17 @@ class StudentsService {
 
         val studentData = nodes.get("students")
         students = mapper.treeToValue(studentData, Array<Student>::class.java).asList()
+    }
+
+    fun filterForStudent(first: Optional<String>, last: Optional<String>) : List<Student>{
+        var filteredList = students
+        if (first.isPresent) {
+            filteredList = filteredList.filter { first.get().equals(it.first )}
+        }
+        if (last.isPresent) {
+            filteredList = filteredList.filter { last.get().equals(it.last )}
+        }
+        return filteredList
     }
 
     @Bean
