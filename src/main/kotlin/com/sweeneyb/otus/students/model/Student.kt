@@ -16,13 +16,13 @@ class SearchView(student: Student) {
     val gpa: Double = (student.studentClasses.foldRight(0.0  ){grade,acc -> acc + grade.grade!!.toDouble()} ) /student.studentClasses.size
 }
 
-class DetailsView( student: Student)  {
+class DetailsView( student: Student, courses: Map<String, String>)  {
     var email = student.email
     val last = student.last
     val first = student.first
-    val studentClasses = student.studentClasses
     // TODO error handling on grade
     val gpa: Double = (student.studentClasses.foldRight(0.0  ){grade,acc -> acc + grade.grade!!.toDouble()} ) /student.studentClasses.size
+    val studentCourses: List<Pair<String?, String?>> = student.studentClasses.map {courses.get(it.id) to it.grade  }
 }
 
 data class Grade(var id: String?, var grade: String?) {

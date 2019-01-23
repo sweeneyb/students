@@ -54,7 +54,7 @@ open class StudentController {
                 ok().body(fromObject(filtered))
             }
             GET("/student/search", handleSearch(students) { SearchView(it)})
-            GET("/student/details", handleSearch(students ) {DetailsView(it)} )
+            GET("/student/details", handleSearch(students ) {DetailsView(it, courses)} )
         }
     }
     fun handleSearch(students:List<Student>, xform: (Student) -> Any): (ServerRequest)->Mono<ServerResponse> {
