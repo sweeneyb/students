@@ -4,6 +4,10 @@ buildscript {
 		springBootVersion = '2.1.2.RELEASE'
 	}
 	repositories {
+
+		maven {
+			url "http://repo.spring.io/plugins-release/"
+		}
 		mavenCentral()
 	}
 	dependencies {
@@ -39,9 +43,9 @@ dependencies {
 
 	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 // https://mvnrepository.com/artifact/org.springframework/spring-web-reactive
-	compile group: 'org.springframework', name: 'spring-web-reactive', version: '5.0.0.M1'
+//	compile group: 'org.springframework', name: 'spring-web-reactive', version: '5.0.0.M1'
 
-
+	compile 'org.jetbrains.kotlin:kotlin-runtime'
 
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -62,4 +66,15 @@ compileTestKotlin {
 		freeCompilerArgs = ['-Xjsr305=strict']
 		jvmTarget = '1.8'
 	}
+}
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Jar File Example',
+				'Implementation-Version': version,
+				'Main-Class': 'com.sweeneyb.otus.students.StudentsApplicationKt'
+	}
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
 }

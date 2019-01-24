@@ -32,7 +32,9 @@ open class StudentController {
     open fun routeFun(@Autowired courses: Map<String, String>, @Autowired studentService: StudentsService): RouterFunction<ServerResponse> {
         return router {
             (GET("/foo/{id}") and accept(MediaType.APPLICATION_JSON)) { request -> ok().body(fromObject(Student(request.pathVariable("id")))) }
-            (GET("/foo/{id}") and accept(MediaType.APPLICATION_XML)) { request -> ok().contentType(MediaType.APPLICATION_XML).body(fromObject(Student(request.pathVariable("id")))) }
+            (GET("/food/{id}") and accept(MediaType.APPLICATION_XML) ) { request -> ok()
+                    .contentType(MediaType.APPLICATION_XML)
+                 .body(fromObject(Student(request.pathVariable("id")))) }
             (GET("/foo") and accept(MediaType.APPLICATION_XML)) {
                 ok().contentType(MediaType.APPLICATION_XML).body(fromObject(Student("7")))
             }
