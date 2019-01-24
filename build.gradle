@@ -31,6 +31,7 @@ repositories {
 }
 
 dependencies {
+	compile('org.springframework.boot:spring-boot-starter-webflux')
 	// https://mvnrepository.com/artifact/org.springframework/spring-webflux
 	compile group: 'org.springframework', name: 'spring-webflux', version: '5.1.4.RELEASE'
 	// https://mvnrepository.com/artifact/org.springframework/spring-context
