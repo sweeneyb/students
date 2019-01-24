@@ -1,4 +1,4 @@
-package com.sweeneyb.otus.students
+package com.sweeneyb.students
 
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,10 +1,12 @@
-package com.sweeneyb.otus.students.model
+package com.sweeneyb.students.model
 
 import java.util.*
 import javax.xml.bind.annotation.XmlRootElement
 
+
+//This was junked up by the first run at JAXB.  I wish I'd tossed it earlier
 @XmlRootElement
-data class Student(var id: String?, var last: String?, var first: String?, var email: String?, var studentClasses: List<Grade> ){
+data class Student(var id: String?,  var first: String?, var last: String?, var email: String?, var studentClasses: List<Grade> ){
     constructor() : this(null, null, null, null, Collections.emptyList<Grade>())
     constructor(id: String) : this(id, null, null, null, Collections.emptyList<Grade>())
 }

@@ -1,0 +1,112 @@
+wagger: "2.0"
+info:
+  description: "An app to learn reactive web on Kotlin"
+  version: "1.0.0"
+  title: "Students"
+  contact:
+    email: "devnull@sweeneyb.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "student.gcp.sweeneyb.com"
+basePath: "/"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /student/search:
+    get:
+      tags:
+        - "students"
+      summary: "Search for a student"
+      description: "Right now, search is a filter for an exact match. Could be swapped out for a regexp or real searching appliance."
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "first"
+          in: "query"
+          description: "Student first name"
+          type: "string"
+        - name: "last"
+          in: "query"
+          description: "Student last name"
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/SearchViewList'
+        400:
+          description: "Bad Request"
+  /student/details:
+    get:
+      tags:
+        - "students"
+      summary: "Get student details"
+      description: "Still a an exact match"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "first"
+          in: "query"
+          description: "Student first name"
+          type: "string"
+        - name: "last"
+          in: "query"
+          description: "Student last name"
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DetailViewList"
+        400:
+          description: "Bad Request"
+
+definitions:
+  SearchViewList:
+    type: "array"
+    items:
+      $ref: '#/definitions/SearchView'
+  SearchView:
+    type: "object"
+    properties:
+      first:
+        type: "string"
+      last:
+        type: "string"
+      gpa:
+        type: "number"
+        format: "float"
+  DetailViewList:
+    type: "array"
+    items:
+      $ref: '#/definitions/DetailView'
+  DetailView:
+    type: "object"
+    properties:
+      first:
+        type: "string"
+      last:
+        type: "string"
+      email:
+        type: "string"
+      gpa:
+        type: "number"
+        format: "float"
+      studentCourse:
+        type: array
+        items:
+          type: object
+          properties:
+            course:
+              type: "string"
+            grade:
+              type: "number"
+              format: "float"
