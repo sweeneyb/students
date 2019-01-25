@@ -1,9 +1,9 @@
-package com.sweeneyb.otus.students.controllers
+package com.sweeneyb.students.controllers
 
-import com.sweeneyb.otus.students.model.Class
-import com.sweeneyb.otus.students.model.Student
-import com.sweeneyb.otus.students.views.DetailsView
-import com.sweeneyb.otus.students.views.SearchView
+import com.sweeneyb.students.model.Class
+import com.sweeneyb.students.model.Student
+import com.sweeneyb.students.views.DetailsView
+import com.sweeneyb.students.views.SearchView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -53,7 +53,7 @@ open class StudentController {
             GET("/student/details", handleSearch(studentService) { DetailsView(it, courses) } )
         }
     }
-    fun handleSearch(studentsService:StudentsService, toView: (Student) -> Any): (ServerRequest)->Mono<ServerResponse> {
+    fun handleSearch(studentsService: StudentsService, toView: (Student) -> Any): (ServerRequest)->Mono<ServerResponse> {
         return {request:ServerRequest ->
             val filtered = studentsService.filterForStudent(request.queryParam("first"), request.queryParam("last"))
             val transformed = filtered.map { toView(it) }

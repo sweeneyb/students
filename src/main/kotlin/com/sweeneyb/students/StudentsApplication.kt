@@ -1,4 +1,4 @@
-package com.sweeneyb.otus.students
+package com.sweeneyb.students
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

@@ -1,8 +1,8 @@
-package com.sweeneyb.otus.students.controllers
+package com.sweeneyb.students.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.sweeneyb.otus.students.model.Student
+import com.sweeneyb.students.model.Student
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient

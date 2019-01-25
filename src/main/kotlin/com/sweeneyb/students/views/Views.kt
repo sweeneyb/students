@@ -1,6 +1,6 @@
-package com.sweeneyb.otus.students.views
+package com.sweeneyb.students.views
 
-import com.sweeneyb.otus.students.model.Student
+import com.sweeneyb.students.model.Student
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement

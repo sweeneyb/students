@@ -1,4 +1,4 @@
-package com.sweeneyb.otus.students.model
+package com.sweeneyb.students.model
 
 import java.util.*
 import javax.xml.bind.annotation.XmlRootElement
